@@ -1,0 +1,20 @@
+html, body {
+  font-family: Arial, Helvetica, sans-serif; }
+
+a {
+  color: black; }
+
+table {
+  table-layout: fixed;
+  width: 100%; }
+  table thead th {
+    text-align: left; }
+
+nav ul {
+  display: inline-block;
+  padding: 0;
+  margin: 0; }
+  nav ul li {
+    display: inline; }
+
+/*# sourceMappingURL=style.css.map */
