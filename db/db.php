@@ -43,6 +43,12 @@ if (!in_array('host',$sql_simples)) {
 	$db->autoinsert('host',[
 		'name'=>'test',
 	]);
+	$db->autoinsert('host',[
+		'name'=>'test2',
+	]);
+	$db->autoinsert('host',[
+		'name'=>'test3',
+	]);
 }
 
 if (!in_array('alias',$sql_simples)) {
@@ -57,17 +63,37 @@ if (!in_array('alias',$sql_simples)) {
 		'host'=>1,
 		'name'=>'test.nl',
 	]);
+	$db->autoinsert('alias',[
+		'host'=>1,
+		'name'=>'test2.nl',
+	]);
+	$db->autoinsert('alias',[
+		'host'=>2,
+		'name'=>'test3.nl',
+	]);
+	$db->autoinsert('alias',[
+		'host'=>3,
+		'name'=>'test4.nl',
+	]);
 }
 
-if (!in_array('settings',$sql_simples))
-$db->exec('
-CREATE TABLE IF NOT EXISTS settings (
-	id INTEGER PRIMARY KEY '.$creates['AUTOINCREMENT'].' NOT NULL,
-	host INTEGER NOT NULL REFERENCES host(id),
-	name varchar(128),
-	UNIQUE (name, host)
-) '.$creates['FOOTER'].'
-');
+if (!in_array('settings',$sql_simples)) {
+	$db->exec('
+	CREATE TABLE IF NOT EXISTS settings (
+		id INTEGER PRIMARY KEY '.$creates['AUTOINCREMENT'].' NOT NULL,
+		host INTEGER NOT NULL REFERENCES host(id),
+		name varchar(128),
+		value text,
+		UNIQUE (name, host)
+	) '.$creates['FOOTER'].'
+	');
+	$db->autoinsert('settings',[
+		'host'=>1,
+		'name'=>'title',
+		'value'=>'Test1',
+	]);
+
+}
 
 if (!in_array('page',$sql_simples)) {
 	$db->exec('

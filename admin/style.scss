@@ -1,5 +1,6 @@
 html, body {
 	font-family: Arial, Helvetica, sans-serif;
+	font-size: large;
 }
 a {
 	color: black;
@@ -8,10 +9,22 @@ a {
 table {
 	table-layout: fixed;
 	width: 100%;
+	border-collapse: collapse;
 
 	thead {
 		th {
 			text-align: left;
+		}
+	}
+	th, td {
+		padding: 0.5em;
+	}
+	tbody {
+		tr:nth-child(odd) {
+			background-color: lightgray;
+		}
+		tr:hover {
+			background-color: grey;
 		}
 	}
 }
@@ -21,12 +34,63 @@ nav {
 		display: inline-block;
 		padding: 0;
 		margin: 0;
+		margin-top: 0.5em;
+		margin-left: 0.5em;
+		margin-bottom: 1em;;
 
 		li {
 			display: inline;
+		}
+		li.show {
+			font-weight: bold;
+		}
+	}
+}
 
-			a {
-				
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+	.modal-content {
+		background-color: #fefefe;
+		border: 1px solid #888;
+		border-radius: 1em;
+		height: calc(100% - 23px);
+		width: calc(100% - 23px);
+		margin-top: 10px;
+		margin-left: 10px;
+
+		form {
+			margin: 1em;
+
+			footer {
+				position: relative;
+
+				button {
+					padding: 1em;
+					border: 0px;
+					border-radius: 1em;
+					margin-right: 1em;
+					cursor: pointer;
+				}
+				button[data]:hover {
+					background-color: gray;
+					color: white;
+				}
+				button[data="save"] {
+					background-color: green;
+				}
+				button[data="cancel"] {
+					background-color: lightgray;
+				}
 			}
 		}
 	}
