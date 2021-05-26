@@ -3,7 +3,7 @@
 class Host extends Table {
 	var $table=[
 		'name'=>[],
-		'alias'=>[],
+		'alias'=>[ 'plaintext'=>true ],
 	];
 	function post($json) {
 		global $db;
@@ -23,11 +23,14 @@ class Host extends Table {
 		if (isset($json->id)) {
 			$qry=$db->queryrow('select * from host where id = ?',[ $json->id ]);
 			$json->data=$qry;
+			$json->data->alias=$db->querykeyvalues('select id, name from alias where host = ? order by name',[ $json->id ]);
+			$json=$this->form($json);
 		}
 		return $json;
 	}
 	function put($json) {
 		global $db;
+		$db->autoupdate('host',$json->id,$json->data);
 		return $json;
 	}
 }

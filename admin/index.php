@@ -7,9 +7,10 @@ $page->name='Admin';
 $classes=[
 	'Host'=>[],
 	'Settings'=>[],
+	'User'=>[],
 	'Template'=>[],
 	'Page'=>[],
-	'User'=>[],
+	'Form'=>[],
 ];
 
 unset($_SESSION['simple']);

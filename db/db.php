@@ -61,7 +61,7 @@ if (!in_array('alias',$sql_simples)) {
 	');
 	$db->autoinsert('alias',[
 		'host'=>1,
-		'name'=>'test.nl',
+		'name'=>$_SERVER['HTTP_HOST'],
 	]);
 	$db->autoinsert('alias',[
 		'host'=>1,
@@ -115,7 +115,7 @@ if (!in_array('page',$sql_simples)) {
 	]);
 	$db->autoinsert('page',[
 		'url'=>'over',
-		'name'=>'test',
+		'name'=>'test over',
 		'host'=>1,
 	]);
 }

@@ -24,6 +24,8 @@ class Settings extends Table {
 	}
 	function put($json) {
 		global $db;
+		$db->autoupdate('settings',$json->id,$json->data);
+		$json->data=$db->queryrow('select settings.*, host.name as host from settings, host where host.id = settings.host order by host, name');
 		return $json;
 	}
 }

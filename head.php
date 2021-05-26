@@ -20,6 +20,7 @@ spl_autoload_register(function ($class) {
 });
 
 $footer='<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>';
+$head=[];
 
 require 'functions.php';
 

@@ -1,6 +1,6 @@
-html, body {
+html, body, button, select, input {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: large; }
+  font-size: 18px; }
 
 a {
   color: black; }
@@ -59,8 +59,14 @@ nav ul {
     margin-left: 10px; }
     .modal .modal-content form {
       margin: 1em; }
+      .modal .modal-content form label {
+        display: block; }
+      .modal .modal-content form input, .modal .modal-content form select {
+        width: 100%; }
       .modal .modal-content form footer {
-        position: relative; }
+        position: fixed;
+        bottom: 1em;
+        margin-bottom: 1em; }
         .modal .modal-content form footer button {
           padding: 1em;
           border: 0px;
