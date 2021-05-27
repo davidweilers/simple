@@ -13,7 +13,7 @@ $classes=[
 	'Form'=>[],
 ];
 
-unset($_SESSION['simple']);
+// unset($_SESSION['simple']);
 $_SESSION['simple']=isset($_SESSION['simple']) ? $_SESSION['simple'] : new Simple($classes);
 $simple=&$_SESSION['simple'];
 
@@ -32,6 +32,12 @@ if (/*isset($_url[1]) && !empty($_url[1]) && */
 if (count($_url)==1 || (count($_url)==2 && empty($_url[1]))) {
 	header('Location: /admin/Host',TRUE,307);
 	exit;
+}
+
+if (isset($_url[2])) {
+	// echo '<pre>';var_dump($page,$_url,$simple);
+	echo $simple->classes[$_url[1]]->{strtolower($_SERVER['REQUEST_METHOD'])}($_url[2]);
+	return;
 }
 
 $head[]='/admin/style.css';

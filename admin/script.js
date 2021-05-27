@@ -31,9 +31,13 @@ const simple = {
 				cache: 'no-cache',
 				body: JSON.stringify(data),
 			}).then(response => response.json()).then(data => {
-				console.log(data);
-				$('.modal').show();
-				simple.form(data,$('.modal-content form'));
+				console.log(data,typeof data.form);
+				if (typeof data.form === 'object') {
+					// location.assign(data.form.location);
+				}	else {
+					$('.modal').show();
+					simple.form(data,$('.modal-content form'));
+				}
 			});
 		});
 	},

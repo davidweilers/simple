@@ -33,6 +33,16 @@ CREATE TABLE IF NOT EXISTS user (
 ) '.$creates['FOOTER'].'
 ');
 
+if (!in_array('remote_addr',$sql_simples))
+$db->exec('
+CREATE TABLE IF NOT EXISTS remote_addr (
+	id INTEGER PRIMARY KEY '.$creates['AUTOINCREMENT'].' NOT NULL,
+	user int NOT NULL REFERENCES user(id),
+	remote_addr varchar(128),
+	`time` time 
+) '.$creates['FOOTER'].'
+');
+
 if (!in_array('host',$sql_simples)) {
 	$db->exec('
 	CREATE TABLE IF NOT EXISTS host (

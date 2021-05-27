@@ -16,12 +16,18 @@ class Page extends Table {
 		$json->table=array_keys($this->table);
 		return $json;
 	}
+	var $page=null;
+	function get($id) {
+		var_dump($this->page);
+	}
 	function getid($json) {
 		global $db;
 		if (isset($json->id)) {
 			$qry=$db->queryrow('select * from page where id = ?',[ $json->id ]);
+			$this->page=$qry;
 			$json->data=$qry;
-			$json=$this->form($json);
+			$json->form=['location'=>'/admin/Page/'.$json->id];
+			// $json=$this->form($json);
 		}
 		return $json;
 	}
