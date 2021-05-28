@@ -118,14 +118,19 @@ if (!in_array('page',$sql_simples)) {
 		meta json
 	) '.$creates['FOOTER'].'
 	');
+	ob_start();
+	for ($i=0;$i<10;$i++) echo '<p>'.time().'</p>';
+	$html=ob_get_clean();
 	$db->autoinsert('page',[
 		'url'=>'',
 		'name'=>'test',
+		'html'=>$html,
 		'host'=>1,
 	]);
 	$db->autoinsert('page',[
 		'url'=>'over',
 		'name'=>'test over',
+		'html'=>$html,
 		'host'=>1,
 	]);
 }

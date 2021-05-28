@@ -1,4 +1,5 @@
-const simple = {
+var simple = {
+	page: null,
 	table: function(data,tbody) {
 		// console.log(data,tbody);
 		var thead = $(tbody).closest('table').find('thead th');
@@ -25,20 +26,19 @@ const simple = {
 			var data = {
 				id: $(this).attr('id')
 			};
-			fetch(window.location.href,{
-				method: 'GETID',
-				mode: 'cors',
-				cache: 'no-cache',
-				body: JSON.stringify(data),
-			}).then(response => response.json()).then(data => {
-				console.log(data,typeof data.form);
-				if (typeof data.form === 'object') {
-					// location.assign(data.form.location);
-				}	else {
+			if (simple.page == 'form')
+				fetch(window.location.href,{
+					method: 'GETID',
+					mode: 'cors',
+					cache: 'no-cache',
+					body: JSON.stringify(data),
+				}).then(response => response.json()).then(data => {
+					console.log(data,typeof data.form);
 					$('.modal').show();
 					simple.form(data,$('.modal-content form'));
-				}
-			});
+				});
+			else
+				window.location.pathname='/admin/'+simple.page+'/'+data.id;
 		});
 	},
 	form: function(data,self) {
@@ -95,7 +95,6 @@ const simple = {
 $(function() {
 	$('a[href="#add"]').click(function() {
 		event.preventDefault();
-		simple
 	});
 	$('table[name] tbody').each(function() {
 		var self = this;

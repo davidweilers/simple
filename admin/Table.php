@@ -2,6 +2,7 @@
 
 class Table {
 	var $table=[];
+	var $_page='form';
 	function write() {
 		echo '<p><a href="#add">Add</a></p>';
 		echo '<table name="',get_class(),'">';

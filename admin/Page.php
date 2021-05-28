@@ -9,6 +9,7 @@ class Page extends Table {
 		'json'=>[ 'hidden'=>true ],
 		'meta'=>[ 'hidden'=>true ],
 	];
+	var $_page=__CLASS__;
 	function post($json) {
 		global $db;
 		$qry=$db->queryarray('select * from page');
@@ -16,9 +17,17 @@ class Page extends Table {
 		$json->table=array_keys($this->table);
 		return $json;
 	}
-	var $page=null;
 	function get($id) {
-		var_dump($this->page);
+		global $db, $footer;
+		$qry=$db->queryrow('select * from page where id = ?',[ $id ]);
+		// var_dump($qry);
+		ob_start();?>
+		<script>
+			var page = <?=json_encode($qry);?>;
+			<?=file_get_contents(__DIR__.'/edit.js'); ?>
+		</script>
+		<? $footer.=ob_get_clean();
+		echo '<main contenteditable="true">',$qry->html,'</main>';
 	}
 	function getid($json) {
 		global $db;

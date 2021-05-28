@@ -34,14 +34,14 @@ if (count($_url)==1 || (count($_url)==2 && empty($_url[1]))) {
 	exit;
 }
 
+$head[]='/admin/style.css';
+$footer.='<script src="/admin/script.js"></script>';
+
 if (isset($_url[2])) {
 	// echo '<pre>';var_dump($page,$_url,$simple);
 	echo $simple->classes[$_url[1]]->{strtolower($_SERVER['REQUEST_METHOD'])}($_url[2]);
 	return;
 }
-
-$head[]='/admin/style.css';
-$footer.='<script src="/admin/script.js"></script>';
 
 // $footer.='<script></script>';
 
@@ -52,8 +52,11 @@ foreach ($classes as $key=>$value) {
 }
 echo '</ul></nav>';
 
-if (isset($simple->classes[$_url[1]]))
+if (isset($simple->classes[$_url[1]])) {
+	$a=$simple->classes[$_url[1]]->_page;
+	$footer.='<script>simple.page='.json_encode($a).'</script>';
 	echo $simple->classes[$_url[1]]->write();
+}
 
 ?><div class="modal"><div class="modal-content">
 	<form method="post">
