@@ -14,9 +14,16 @@ a {
 	display: block;
 	position: fixed;
 	padding: 0.2em;
-	background-color: rgba(255,255,255,0.4);
+	background-color: rgba(255,255,255,0.8);
 	border-width: 1px;
 	border-style: solid;
+	border-radius: 5px;
+	span {
+		display: inline-block;
+		padding: 0.1em;
+		width: 1.5em;
+		text-align: center;
+	}
 }
 
 table {

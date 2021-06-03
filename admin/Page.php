@@ -21,7 +21,9 @@ class Page extends Table {
 		global $db, $footer;
 		$qry=$db->queryrow('select * from page where id = ?',[ $id ]);
 		// var_dump($qry);
-		ob_start();?>
+		ob_start();
+		echo file_get_contents('templates/edit.html');
+		?>
 		<script>
 			var page = <?=json_encode($qry);?>;
 			<?=file_get_contents(__DIR__.'/edit.js'); ?>

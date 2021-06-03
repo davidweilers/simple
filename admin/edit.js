@@ -1,18 +1,113 @@
 var edit = {
 	toolbar: null,
+	keys: {
+		p: {
+			fn: 'formatBlock',
+			key: 'P',
+			tag: 'p',
+		},
+		h1: {
+			fn: 'formatBlock',
+			key: '1',
+			title: 'h1',
+			tag: 'h1'
+		},
+		h2: {
+			fn: 'formatBlock',
+			key: '2',
+			title: 'h2',
+			tag: 'h2'
+		},
+		bold: {
+			fn: 'bold',
+			key: 'B',
+			tag: 'b'
+		},
+		strong: {
+			fn: 'bold',
+			key: 'B'
+		},
+		italic: {
+			fn: 'italic',
+			key: 'I',
+			tag: 'i'
+		},
+		em: {
+			fn: 'italic',
+			key: 'I'
+		},
+		del: {
+			fn: 'strikethrough',
+			key: '',
+		},
+	},
 	init: function() {
-		const editable = document.getElementsByName("main");//contenteditable");
-		document.addEventListener("click", (e) => toggleTooltip(e, editable));
-		document.addEventListener("click", (e) => updateIndex(e, editable));
-		document.addEventListener("keyup", (e) => toggleTooltip(e, editable));
-		document.addEventListener("keyup", (e) => updateIndex(e, editable));
-
-		$('main').before( '<div class="toolbar">test</div>' );
+		$('main').before( '<div class="toolbar">'+
+			'<span data="">H1</span>'+
+			'<span data="">B</span>'+
+			'<span data="">I</span>'+
+			'</div>' );
 
 		edit.toolbar = $('.toolbar');
 
-		$('main').on('keyup mouseup',function() {
-			console.log(  );
+		var __keys = Object.keys(edit.keys);
+		edit._keys = {};
+		for (var i=0;i<__keys.length;i++) {
+			// console.log(__keys[i],edit.keys[__keys[i]]);
+			var c = edit.keys[__keys[i]];
+			if (undefined != c.key) {
+				edit._keys[ c.key ]=c;
+			}
+		}
+		console.log(edit._keys);
+
+		$('main')
+		.focus()
+		.on('keydown',function(e) {
+			const caret = toggleTooltip(event, this);
+			var keyCode = e.which;
+			// console.log(event);
+			var keyChar = e.key.toUpperCase();
+
+			if ((e.ctrlKey || e.metaKey) && !e.altKey) {
+				ctrl = true;
+				// execCmd('execCmd','');
+				// console.log( keyCode, keyChar, edit._keys[keyChar] );
+
+				if (undefined != edit._keys[keyChar]) {
+					console.log( keyCode, edit._keys[keyChar], caret );
+					if (keyCode >= 49 && keyCode <= 49+5) {
+						var p = caret.selection.anchorNode.parentNode;
+						var h = 'H'+(keyCode-48);
+						console.log(p.nodeName);
+						if (h != p.nodeName) {
+							caret.
+							p.outerHTML = '<'+h+'>'+p.innerHTML+'</'+h+'>';
+							console.log(caret.selection.anchorOffset);
+						}
+						// p.nodeName = edit._keys[keyChar].tag.toUpperCase();
+					}
+					// document.execCommand( edit._keys[keyChar].fn ); 
+					event.preventDefault();
+				}
+			}
+		})
+		.on('keyup',function(e) {
+			// const caret = toggleTooltip(event, this);
+			event.preventDefault();
+
+			var keyCode = e.which;
+
+			if (keyCode >= 37 && keyCode <= 40) {
+				return;
+			}
+
+			if (keyCode === 8 || keyCode === 13 || keyCode === 46) {
+				return;
+			}
+
+			// console.log( caret );			
+			// execCommand
 		});
 
 		console.log(page);
@@ -45,7 +140,9 @@ function getCaretCoordinates() {
 		  x = rect.left; // since the caret is only 1px wide, left == right
 		  y = rect.top; // top edge of the caret
 		}
+		// console.log( $(selection.anchorNode).closest('p') );
 	  }
+	  return { x, y, selection };
 	}
 	return { x, y };
   }
@@ -69,24 +166,23 @@ function getCaretCoordinates() {
 		position = preCaretRange.toString().length;
 	  }
 	}
-	return position;
+	return { position };
   }
   
   function toggleTooltip(event, contenteditable) {
 	const toolbar = edit.toolbar[0];
-	console.log(toolbar);
+	// console.log(toolbar,contenteditable);
 	// const tooltip = document.getElementById("tooltip");
-	if (contenteditable.contains(event.target)) {
-	  const { x, y } = getCaretCoordinates();
+	// if (contenteditable.contains(event.target)) {
+	  const { x, y, selection } = getCaretCoordinates();
+	//   console.log(event.target,selection);
 	  // tooltip.setAttribute("aria-hidden", "false");
-	  tooltip.setAttribute(
+	  toolbar.setAttribute(
 		"style",
-		`display: inline-block; left: ${x - 32}px; top: ${y - 36}px`
+		`display: block; top: ${y - 36}px`
+		// `display: block; left: ${x - 32}px; top: ${y - 36}px`
 	  );
-	} else {
-	  // tooltip.setAttribute("aria-hidden", "true");
-	  tooltip.setAttribute("style", "display: none;");
-	}
+	return { x, y, selection };
   }
   
   function updateIndex(event, element) {
